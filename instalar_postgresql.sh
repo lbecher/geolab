@@ -77,7 +77,7 @@ function verifica_distribuicao {
 		echo "";
 		echo "Sua distribuição Linux não foi reconhecida como Ubuntu.";
 		echo "O script de instalação pode não funcionar neste sistema!";
-		read -p "Continuar a instalação por sua conta em risco? [s/N] " escolha;
+		read -p "Deseja continuar a instalação por sua conta em risco? [s/N] " escolha;
 		if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
 		then
 			escolher_distro;
