@@ -6,7 +6,9 @@ function continuar {
 		if [ "$senha" == "$senha_c" ]
 		then
 			sudo usermod -p $(openssl passwd -1 $senha) postgres;
-			sudo su -c "psql -c \"ALTER USER postgres WITH PASSWORD '${senha}'\";" -s /bin/sh postgres;
+			echo "";
+			echo "Digite a senha do usuário postgres."; 
+			su -c "psql -c \"ALTER USER postgres WITH PASSWORD '${senha}'\";" -s /bin/sh postgres;
 			i=3;
 		else
 			echo "As senhas não combinam!";
