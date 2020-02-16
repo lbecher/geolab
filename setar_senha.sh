@@ -1,15 +1,17 @@
 function continuar {
-	for i in 1 2 3;
+	i=1;
+	while "$i" != "4";
 	do
 		read -p "Nova senha: " senha;
 		read -p "Confirme a nova senha: " senha_c;
 		if [ "$senha" == "$senha_c" ]
 		then
 			sudo usermod -p $(openssl passwd -1 $senha) postgres;
-			su -c "psql -c \"ALTER USER postgres WITH PASSWORD '${senha}'\";" -s /bin/sh postgres -p $senha;
+			echo $senha | su -c "psql -c \"ALTER USER postgres WITH PASSWORD '${senha}'\";" -s /bin/sh postgres;
 			i=4;
 		else
 			echo "As senhas não combinam!";
+			i=i+1;
 		fi
 	done
 }
