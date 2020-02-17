@@ -18,6 +18,7 @@ function continuar {
 			su -c "psql -c \"ALTER USER postgres WITH PASSWORD '${senha}'\";" -s /bin/sh postgres;
 			i=4;
 		else
+			echo "";
 			echo "As senhas não combinam!";
 			let i=$i+1;
 		fi
