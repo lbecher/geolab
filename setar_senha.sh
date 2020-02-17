@@ -2,9 +2,13 @@ function continuar {
 	i=1;
 	while [ $i -lt 4 ];
 	do
+		echo "Nova senha: ";
 		stty -echo;
-		read -p "Nova senha: " senha;
-		read -p "Confirme a nova senha: " senha_c;
+		read senha;
+		stty echo;
+		echo "Confirme a nova senha: ";
+		stty -echo;
+		read senha_c;
 		stty echo;
 		if [ "$senha" == "$senha_c" ]
 		then
