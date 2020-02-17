@@ -1,3 +1,14 @@
+function continuar {
+	if [ "$(whoami)" != "postgres" ]; then
+		echo "";
+		echo "Esse script precisa ser executado pelo usuário postgres";
+		echo "";
+		echo "Para mudar de usuário, use o comando \"su postgres\".";
+		echo "";
+	else
+		criar_bd;
+	fi
+}
 
 function criar_bd {
 	echo "";
@@ -19,7 +30,7 @@ echo "Isso vai modificar seu servidor!";
 read -p "Continuar? [S/n] " escolha;
 if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
 then
-	criar_bd;
+	continuar;
 else
 	echo "Script abortado!";
 fi
