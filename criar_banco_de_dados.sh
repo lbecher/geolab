@@ -1,7 +1,7 @@
 function continuar {
 	if [ "$(whoami)" != "postgres" ]; then
 		echo "";
-		echo "Esse script precisa ser executado pelo usuário postgres";
+		echo "Esse script precisa ser executado pelo usuário postgres!";
 		echo "";
 		echo "Para mudar de usuário, use o comando \"su postgres\".";
 		echo "";
