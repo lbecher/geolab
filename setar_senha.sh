@@ -2,8 +2,10 @@ function continuar {
 	i=1;
 	while [ $i -lt 4 ];
 	do
+		stty -echo;
 		read -p "Nova senha: " senha;
 		read -p "Confirme a nova senha: " senha_c;
+		stty echo;
 		if [ "$senha" == "$senha_c" ]
 		then
 			sudo usermod -p $(openssl passwd -1 $senha) postgres;
