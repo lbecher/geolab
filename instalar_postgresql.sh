@@ -5,7 +5,7 @@ function ubuntu_bionic {
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
 	sudo apt-get upgrade;
-	sudo apt-get install postgresql-11;
+	sudo apt-get install postgis;
 }
 
 function ubuntu_xenial {
@@ -15,7 +15,7 @@ function ubuntu_xenial {
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
 	sudo apt-get upgrade;
-	sudo apt-get install postgresql-11;
+	sudo apt-get install postgis;
 }
 
 function escolher_distro {
@@ -88,7 +88,7 @@ function verifica_distribuicao {
 }
 
 clear;
-echo "Script de instalação do PostgreSQL 11 para o Ubuntu LTS.";
+echo "Script de instalação do PostgreSQL e PostGIS para o Ubuntu LTS.";
 echo "Isso vai modificar seu sistema!";
 read -p "Continuar? [S/n] " escolha;
 if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
