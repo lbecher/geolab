@@ -1,3 +1,3 @@
 sudo apt update;
 sudo apt upgrade;
-sudo apt install mesa-vulkan-drivers xorg gnome-session gnome-terminal gnome-system-monitor gedit gnome-software nautilus firefox firefox-locale-br;
+sudo apt install mesa-vulkan-drivers xorg kubuntu-desktop konsole kate plasma-discover firefox firefox-locale-br;
