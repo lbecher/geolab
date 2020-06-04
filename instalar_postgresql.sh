@@ -5,7 +5,7 @@ function ubuntu_bionic {
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
 	sudo apt-get upgrade;
-	sudo apt-get install postgis;
+	sudo apt-get install postgresql-12;
 }
 
 function ubuntu_xenial {
@@ -15,7 +15,7 @@ function ubuntu_xenial {
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
 	sudo apt-get upgrade;
-	sudo apt-get install postgis;
+	sudo apt-get install postgresql-12;
 }
 
 function escolher_distro {
