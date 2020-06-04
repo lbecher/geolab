@@ -88,7 +88,7 @@ function verifica_distribuicao {
 }
 
 clear;
-echo "Script de instalação do PostgreSQL e PostGIS para o Ubuntu LTS.";
+echo "Script de instalação do PostgreSQL para Ubuntu LTS.";
 echo "Isso vai modificar seu sistema!";
 read -p "Continuar? [S/n] " escolha;
 if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
