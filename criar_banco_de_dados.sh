@@ -12,15 +12,29 @@ function continuar {
 
 function criar_bd {
 	echo "";
+	
 	read -p "Digite um nome para o novo banco de dados: " nome;
-	echo "":
+	
+	echo "";
+	
 	psql -c "CREATE DATABASE \"$nome\" WITH ENCODING = 'UTF8' CONNECTION LIMIT = -1;";
+	
 	psql -c "CREATE GROUP \"${nome}_nivel-0\";";
 	psql -c "CREATE GROUP \"${nome}_nivel-1\";";
 	psql -c "CREATE GROUP \"${nome}_nivel-2\";";
-	psql -c "GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
-	psql -c "GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
-	psql -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
+	
+	psql -d "$nome" -c "GRANT USAGE ON SCHEMA public TO \"${nome}_nivel-0\";";
+	psql -d "$nome" -c "GRANT USAGE ON SCHEMA public TO \"${nome}_nivel-1\";";
+	psql -d "$nome" -c "GRANT USAGE ON SCHEMA public TO \"${nome}_nivel-2\";";
+	
+	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
+	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
+	psql -d "$nome" -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
+	
+	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL SEQUENCES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
+	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL SEQUENCES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
+	psql -d "$nome" -c "GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
+	
 	echo "";
 }
 
