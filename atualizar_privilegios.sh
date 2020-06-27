@@ -25,7 +25,7 @@ function atualizar {
 }
 
 clear;
-echo "Script atualizar privilégios após a criação de uma nova tabela.";
+echo "Script para atualizar privilégios após a criação de uma nova tabela.";
 echo "Isso vai modificar seu servidor!";
 read -p "Continuar? [S/n] " escolha;
 if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
