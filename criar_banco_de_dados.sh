@@ -27,6 +27,10 @@ function criar_bd {
 	psql -d "$nome" -c "GRANT USAGE ON SCHEMA public TO \"${nome}_nivel-1\";";
 	psql -d "$nome" -c "GRANT USAGE ON SCHEMA public TO \"${nome}_nivel-2\";";
 	
+	psql -d "$nome" -c "REVOKE TRUNCATE ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
+	psql -d "$nome" -c "REVOKE DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
+	psql -d "$nome" -c "REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
+	
 	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
 	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
 	psql -d "$nome" -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
