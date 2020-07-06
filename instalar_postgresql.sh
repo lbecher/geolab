@@ -1,38 +1,43 @@
-function ubuntu_bionic {
-	touch pgdg;
-	printf "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > pgdg;
-	sudo mv pgdg /etc/apt/sources.list.d/pgdg.list;
+function ubuntu_focal {
+	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
-	sudo apt-get upgrade;
-	sudo apt-get install postgresql-12;
+	sudo apt-get install postgresql;
+}
+
+function ubuntu_bionic {
+	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
+	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
+	sudo apt-get update;
+	sudo apt-get install postgresql;
 }
 
 function ubuntu_xenial {
-	touch pgdg;
-	printf "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > pgdg;
-	sudo mv pgdg /etc/apt/sources.list.d/pgdg.list;
+	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
 	sudo apt-get update;
-	sudo apt-get upgrade;
-	sudo apt-get install postgresql-12;
+	sudo apt-get install postgresql;
 }
 
 function escolher_distro {
 	escolha="0";
-	while [ "$escolha" != "1" ] && [ "$escolha" != "2" ];
+	while [ "$escolha" != "1" ] || [ "$escolha" != "2" ] || [ "$escolha" != "3" ];
 	do
 		echo "";
 		echo "Fazer instalação característica do:";
 		echo "";
-		echo "1 - Ubuntu Bionic Beaver (18.04)";
-		echo "2 - Ubuntu Xenial Xerus (16.04)";
+		echo "1 - Ubuntu Focal Fossa (20.04)";
+		echo "2 - Ubuntu Bionic Beaver (18.04)";
+		echo "3 - Ubuntu Xenial Xerus (16.04)";
 		echo "";
 		read -p "Digite o número da opção desejada: " escolha;
 		if [ "$escolha" == "1" ];
 		then
-			ubuntu_bionic;
+			ubuntu_focal;
 		elif [ "$escolha" == "2" ];
+		then
+			ubuntu_bionic;
+		elif [ "$escolha" == "3" ];
 		then
 			ubuntu_xenial;
 		else
@@ -46,7 +51,10 @@ function verifica_versao {
 
 	codinome=$(grep ^"VERSION_CODENAME=" /etc/os-release | sed 's/^VERSION_CODENAME=//' | sed 's/"//' | sed 's/"//');
 
-	if [ "$codinome" == "bionic" ];
+	if [ "$codinome" == "focal" ];
+	then
+		ubuntu_focal;
+	elif [ "$codinome" == "bionic" ];
 	then
 		ubuntu_bionic;
 	elif [ "$codinome" == "xenial" ];
@@ -54,9 +62,9 @@ function verifica_versao {
 		ubuntu_xenial;
 	else
 		echo "";
-		echo "Sua versão do Ubuntu não foi reconhecida como Bionic Beaver (18.04) ou como Xenial Xerus (16.04).";
+		echo "Sua distro não foi reconhecida como Ubuntu Focal Fossa (20.04), Ubuntu Bionic Beaver (18.04) ou como Ubuntu Xenial Xerus (16.04).";
 		echo "A instalação pode não funcionar nesta versão!";
-		read -p "Deseja continuar a instalação por sua conta em risco? [s/N] " escolha;
+		read -p "Deseja continuar a instalação (por sua conta em risco)? [s/N] " escolha;
 		if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
 		then
 			escolher_distro;
