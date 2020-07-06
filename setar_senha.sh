@@ -26,7 +26,7 @@ function continuar {
 }
 
 clear;
-echo "Script para setar senha do banco de dados.";
+echo "Script para setar a senha dos usuários postgres.";
 echo "Isso vai modificar seu servidor!";
 read -p "Continuar? [S/n] " escolha;
 if [ "$escolha" == "s" ] || [ "$escolha" == "S" ];
