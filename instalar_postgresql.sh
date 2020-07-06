@@ -1,22 +1,22 @@
 function ubuntu_focal {
 	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
-	sudo apt-get update;
-	sudo apt-get install postgresql;
+	sudo apt-get update -y;
+	sudo apt-get install postgresql -y;
 }
 
 function ubuntu_bionic {
 	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
-	sudo apt-get update;
-	sudo apt-get install postgresql;
+	sudo apt-get update -y;
+	sudo apt-get install postgresql -y;
 }
 
 function ubuntu_xenial {
 	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list';
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -;
-	sudo apt-get update;
-	sudo apt-get install postgresql;
+	sudo apt-get update -y;
+	sudo apt-get install postgresql -y;
 }
 
 function escolher_distro {
