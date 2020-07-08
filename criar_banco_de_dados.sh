@@ -15,8 +15,6 @@ function criar_bd {
 	
 	read -p "Digite um nome para o novo banco de dados: " nome;
 	
-	echo "";
-	
 	psql -c "CREATE DATABASE \"$nome\" WITH ENCODING = 'UTF8' CONNECTION LIMIT = -1;";
 	
 	psql -c "CREATE GROUP \"${nome}_nivel-0\";";
