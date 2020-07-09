@@ -15,13 +15,17 @@ function atualizar {
 	
 	read -p "Digite o nome do banco de dados: " nome;
 
-	psql -d "$nome" -c "REVOKE TRUNCATE ON ALL TABLES IN SCHEMA public FROM GROUP \"${nome}_nivel-0\";";
-	psql -d "$nome" -c "REVOKE DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public FROM GROUP \"${nome}_nivel-1\";";
-	psql -d "$nome" -c "REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public FROM GROUP \"${nome}_nivel-2\";";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT USAGE ON SCHEMA %I TO \"${nome}_nivel-0\" \$\$, sch); END LOOP; END; \$do\$;"
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT USAGE ON SCHEMA %I TO \"${nome}_nivel-1\" \$\$, sch); END LOOP; END; \$do\$;"
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT USAGE ON SCHEMA %I TO \"${nome}_nivel-2\" \$\$, sch); END LOOP; END; \$do\$;"
+
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ REVOKE TRUNCATE ON ALL TABLES IN SCHEMA %I FROM GROUP \"${nome}_nivel-0\" \$\$, sch); END LOOP; END; \$do\$;";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ REVOKE DELETE, TRUNCATE ON ALL TABLES IN SCHEMA %I FROM GROUP \"${nome}_nivel-1\" \$\$, sch); END LOOP; END; \$do\$;";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA %I FROM GROUP \"${nome}_nivel-2\" \$\$, sch); END LOOP; END; \$do\$;";
 	
-	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-0\";";
-	psql -d "$nome" -c "GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-1\";";
-	psql -d "$nome" -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO GROUP \"${nome}_nivel-2\";";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA %I TO GROUP \"${nome}_nivel-0\" \$\$, sch); END LOOP; END; \$do\$;";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT SELECT, INSERT, UPDATE, REFERENCES, TRIGGER ON ALL TABLES IN SCHEMA %I TO GROUP \"${nome}_nivel-1\" \$\$, sch); END LOOP; END; \$do\$;";
+	psql -d "$nome" -c "DO \$do\$ DECLARE sch text; BEGIN FOR sch IN SELECT nspname FROM pg_namespace LOOP EXECUTE format(\$\$ GRANT SELECT ON ALL TABLES IN SCHEMA %I TO GROUP \"${nome}_nivel-2\" \$\$, sch); END LOOP; END; \$do\$;";
 }
 
 clear;
